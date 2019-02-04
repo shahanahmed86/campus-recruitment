@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
+    CircularProgress,
     Paper,
     TextField, Typography, Button
 } from '@material-ui/core';
 import {
     auth, database,
-    // database
 } from 'firebase';
 
 import PositionedSnackbar from '../containers/snackbar';
@@ -21,7 +21,6 @@ class StudentLogin extends Component {
             snackMessage: '',
             isLoading: false,
             isSignIn: true,
-            isStatus: true,
             email: 'shahan@domain.com',
             password: '123abc456',
             confirmPassword: '123abc456',
@@ -61,72 +60,88 @@ class StudentLogin extends Component {
     }
 
     onLoginButton = () => {
+        this.setState({ isLoading: true });
         let {
             isSignIn,
-            email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob,
-            status
+            email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob
         } = this.state;
         if (!isSignIn) {
             if (email && password && confirmPassword && fatherName && firstName && lastName && cnic && education && dob) {
                 if (password === confirmPassword) {
                     auth().createUserWithEmailAndPassword(email, password)
                         .then(success => {
-                            const key = database().ref().child('profiles').child('students').push().key;
-                            database().ref().child('profiles').child('students').child(key).set({
-                                email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob,
-                                status,
-                                uid: success.user.uid
+                            const uid = success.user.uid
+                            database().ref().child('profiles').child('students').child(uid).set({
+                                email, password,
+                                confirmPassword, fatherName, firstName, lastName, cnic, education, dob,
+                                uid, isStatus: true
                             });
-                            email = password = confirmPassword = fatherName = firstName = lastName = cnic = education = dob = ''
+                            email = password = confirmPassword = fatherName = firstName = lastName = cnic = education = dob = '';
                             this.setState({
                                 email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob,
                                 snackOpen: true,
-                                snackMessage: 'Email created successfully'
+                                snackMessage: 'Email created successfully',
+                                isLoading: false
                             })
                         })
                         .catch(err => {
                             this.setState({
                                 snackOpen: true,
-                                snackMessage: err.message
+                                snackMessage: err.message,
+                                isLoading: false
                             });
                         });
                 }
                 else {
                     this.setState({
                         snackOpen: true,
-                        snackMessage: 'Password mismatched'
+                        snackMessage: 'Password mismatched',
+                        isLoading: false
                     });
                 }
             } else {
                 this.setState({
                     snackOpen: true,
-                    snackMessage: 'All fields are required'
+                    snackMessage: 'All fields are required',
+                    isLoading: false
                 });
             }
         } else {
-
+            auth().signInWithEmailAndPassword(email, password)
+                .then(success => {
+                    this.setState({
+                        isLoading: false
+                    });
+                })
+                .catch(err => {
+                    this.setState({
+                        snackOpen: true,
+                        snackMessage: err.message,
+                        isLoading: false
+                    });
+                });
         }
     }
 
     render() {
         const {
+            isLoading,
             isSignIn,
             snackOpen, snackMessage,
             email, password,
             confirmPassword, fatherName, firstName, lastName, cnic, education, dob
         } = this.state;
+        if (isLoading) return (
+            <div>
+                <CircularProgress />
+            </div>
+        );
         return (
             <div>
                 <Paper
                     className='styling-paper'
                     elevation={3}
                 >
-                    <Typography
-                        align='center'
-                        color='primary'
-                        variant='h5'
-                        children='Campus Recruitment System'
-                    />
                     <Typography
                         align='center'
                         color='secondary'

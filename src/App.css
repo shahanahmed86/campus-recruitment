@@ -1,29 +1,38 @@
-/* Global Styling */
+/* Global */
 
 body {
-  background-color: #f4f4f4;
   font-family: Verdana, Tahoma, sans-serif;
-  line-height: 1.5rem
+  line-height: 1.5rem;
+  overflow-y: scroll;
+  background: url('./images/back.jpg') no-repeat fixed;
+  background-size: cover;
 }
 
 .container {
   width: 95%;
   margin: auto;
-  overflow: hidden
+  overflow: hidden;
+  opacity: 0.85;
+}
+
+/* Home Page */
+
+.home-page {
+  margin-bottom: 15px;
 }
 
 /* Login Page */
 
 .login-main {
   margin: auto;
-  width: 400px;
+  min-width: fit-content;
+  max-width: 450px;
 }
 
 .login-box {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 85vh;
+  min-height: 100%;
   margin: 10px auto;
   max-width: fit-content;
 }
@@ -37,9 +46,4 @@ body {
   margin-top: 10px;
   display: block;
   text-align: center;
-}
-
-.styling-link {
-  text-decoration: none;
-  color: white
 }
