@@ -3,7 +3,12 @@ import {
     Paper,
     TextField, Typography, Button
 } from '@material-ui/core';
-import * as firebase from 'firebase';
+import {
+    auth, database,
+    // database
+} from 'firebase';
+
+import PositionedSnackbar from '../containers/snackbar';
 
 import './config';
 import '../App.css';
@@ -12,43 +17,89 @@ class LoginPage extends Component {
     constructor() {
         super();
         this.state = {
+            snackOpen: false,
+            snackMessage: '',
             isLoading: false,
             isSignIn: true,
-            email: '',
-            password: '',
-            confirmPassword: '',
-            fatherName: '',
-            firstName: '',
-            lastName: '',
-            cnic: '',
-            education: '',
-            dob: ''
+            email: 'shahan@domain.com',
+            password: '123abc456',
+            confirmPassword: '123abc456',
+            fatherName: 'Abdus Subhan Khan',
+            firstName: 'Shahan',
+            lastName: 'Ahmed Khan',
+            cnic: '42301-8964999-9',
+            education: 'Intermediate',
+            dob: '1986-01-29'
         }
     }
 
+    handleClose = () => {
+        this.setState({ snackOpen: false });
+    };
+
     handleChange = ev => {
         const { name, value } = ev.target;
-        this.setState({ [name]: value });
+        this.setState({
+            [name]: value
+        });
     }
 
     onChangeLoginState = () => {
         this.setState(state => ({
             isSignIn: !state.isSignIn,
-            email: '',
-            password: '',
-            confirmPassword: '',
-            fatherName: '',
-            firstName: '',
-            lastName: '',
-            cnic: '',
-            education: '',
-            dob: ''
+            // email: '',
+            // password: '',
+            // confirmPassword: '',
+            // fatherName: '',
+            // firstName: '',
+            // lastName: '',
+            // cnic: '',
+            // education: '',
+            // dob: ''
         }));
     }
 
     onLoginButton = () => {
-        if (!this.state.isSignIn) {
-            
+        let {
+            isSignIn,
+            email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob
+        } = this.state;
+        if (!isSignIn) {
+            if (email && password && confirmPassword && fatherName && firstName && lastName && cnic && education && dob) {
+                if (password === confirmPassword) {
+                    auth().createUserWithEmailAndPassword(email, password)
+                        .then(success => {
+                            const key = database().ref().child('profiles').child('students').push().key;
+                            database().ref().child('profiles').child('students').child(key).set({
+                                email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob,
+                                uid: success.user.uid
+                            });
+                            email = password = confirmPassword = fatherName = firstName = lastName = cnic = education = dob = ''
+                            this.setState({
+                                email, password, confirmPassword, fatherName, firstName, lastName, cnic, education, dob,
+                                snackOpen: true,
+                                snackMessage: 'Email created successfully'
+                            })
+                        })
+                        .catch(err => {
+                            this.setState({
+                                snackOpen: true,
+                                snackMessage: err.message
+                            });
+                        });
+                }
+                else {
+                    this.setState({
+                        snackOpen: true,
+                        snackMessage: 'Password mismatched'
+                    });
+                }
+            } else {
+                this.setState({
+                    snackOpen: true,
+                    snackMessage: 'All fields are required'
+                });
+            }
         } else {
 
         }
@@ -57,10 +108,10 @@ class LoginPage extends Component {
     render() {
         const {
             isSignIn,
+            snackOpen, snackMessage,
             email, password,
             confirmPassword, fatherName, firstName, lastName, cnic, education, dob
         } = this.state;
-        console.log(this.state);
         return (
             <div className='login-box'>
                 <Paper
@@ -190,6 +241,11 @@ class LoginPage extends Component {
                         />
                     </div>
                 </Paper>
+                <PositionedSnackbar
+                    open={snackOpen}
+                    message={snackMessage}
+                    close={this.handleClose}
+                />
             </div>
         );
     }

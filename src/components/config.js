@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import { initializeApp } from 'firebase';
 
 // Initialize Firebase
 var config = {
@@ -9,4 +9,4 @@ var config = {
     storageBucket: "",
     messagingSenderId: "913006828806"
 };
-firebase.initializeApp(config);
+initializeApp(config);
