@@ -15,7 +15,8 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className='container'>
-            <Route path='/' component={LoginPage} exact />
+            <Route path='/' component={() => <h1>Home Page</h1>} />
+            <Route path='/login' component={LoginPage} />
             <Route path='/dashboard' component={Dashboard} />
           </div>
         </Router>

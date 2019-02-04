@@ -7,19 +7,25 @@ body {
 }
 
 .container {
-  width: 80%;
+  width: 95%;
   margin: auto;
   overflow: hidden
 }
 
 /* Login Page */
 
+.login-main {
+  margin: auto;
+  width: 400px;
+}
+
 .login-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  margin: 10px;
+  min-height: 85vh;
+  margin: 10px auto;
+  max-width: fit-content;
 }
 
 .styling-paper {
@@ -31,4 +37,9 @@ body {
   margin-top: 10px;
   display: block;
   text-align: center;
+}
+
+.styling-link {
+  text-decoration: none;
+  color: white
 }
