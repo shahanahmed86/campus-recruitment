@@ -5,9 +5,9 @@ import {
 import { Route } from 'react-router-dom';
 import { auth } from 'firebase';
 
-import StudentLogin from './student';
-import CompanyLogin from './company';
-import AdminLogin from './admin';
+import StudentLogin from './login/student';
+import CompanyLogin from './login/company';
+import AdminLogin from './login/admin';
 
 import '../App.css';
 
@@ -39,18 +39,16 @@ class LoginPage extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true });
+        this.selection(this.state.selectedTab);
         auth().onAuthStateChanged(user => {
             if (user) return this.props.history.push('/dashboard');
             this.setState({ isLoading: false });
-        })
-        this.selection(this.state.selectedTab);
+        });
     }
 
-    selectTab = tab => {
-        this.setState({
-            selectedTab: tab
-        });
-        this.selection(tab);
+    selectTab = selectedTab => {
+        this.setState({ selectedTab });
+        this.selection(selectedTab);
     }
 
     selection = val => {

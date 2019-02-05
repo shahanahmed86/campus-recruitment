@@ -8,12 +8,12 @@ import {
     auth, database,
 } from 'firebase';
 
-import PositionedSnackbar from '../containers/snackbar';
+import PositionedSnackbar from '../../containers/snackbar';
 
-import './config';
-import '../App.css';
+import '../config';
+import '../../App.css';
 
-class CompanyLogin extends Component {
+class StudentLogin extends Component {
     constructor() {
         super();
         this.state = {
@@ -21,13 +21,17 @@ class CompanyLogin extends Component {
             snackMessage: '',
             isLoading: false,
             isSignIn: true,
-            email: 'brotherenterprises@domain.com',
+            email: 'shahan@domain.com',
             password: '123abc456',
             confirmPassword: '123abc456',
-            ntn: '4109930-3',
-            businessType: 'Distribution',
-            proprietorName: 'Noman Akhtar',
-            cnic: '99999-9999999-9'
+            fatherName: 'Abdus Subhan Khan',
+            firstName: 'Shahan',
+            lastName: 'Ahmed Khan',
+            cnic: '42301-8964999-9',
+            subject: 'Commerce',
+            education: 'Intermediate',
+            gpa: '3.0',
+            dob: '1986-01-29'
         }
     }
 
@@ -48,10 +52,14 @@ class CompanyLogin extends Component {
             // email: '',
             // password: '',
             // confirmPassword: '',
-            // ntn: '',
-            // businessType: '',
-            // proprietorName: '',
-            // cnic: ''
+            // fatherName: '',
+            // firstName: '',
+            // lastName: '',
+            // cnic: '',
+            // subject: '',
+            // education: '',
+            // gpa: '',
+            // dob: ''
         }));
     }
 
@@ -59,22 +67,24 @@ class CompanyLogin extends Component {
         this.setState({ isLoading: true });
         let {
             isSignIn,
-            email, password, confirmPassword, ntn, businessType, proprietorName, cnic
+            email, password, confirmPassword, fatherName, firstName, lastName, cnic, subject, education, gpa, dob
         } = this.state;
         if (!isSignIn) {
-            if (email && password && confirmPassword && ntn && businessType && proprietorName && cnic) {
+            if (email && password && confirmPassword && fatherName && firstName && lastName && cnic && subject && education && gpa && dob) {
                 if (password === confirmPassword) {
                     auth().createUserWithEmailAndPassword(email, password)
                         .then(success => {
                             const uid = success.user.uid
-                            database().ref().child('profiles').child('companies').child(uid).set({
+                            database().ref().child('profiles').child(uid).set({
                                 email, password,
-                                confirmPassword, ntn, businessType, proprietorName, cnic,
-                                uid, isStatus: true
+                                confirmPassword, fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
+                                uid,
+                                isStatus: true,
+                                category: 'student'
                             });
-                            email = password = confirmPassword = ntn = businessType = proprietorName = cnic = '';
+                            email = password = confirmPassword = fatherName = firstName = lastName = cnic = subject = education = gpa = dob = '';
                             this.setState({
-                                email, password, confirmPassword, ntn, businessType, proprietorName, cnic,
+                                email, password, confirmPassword, fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
                                 snackOpen: true,
                                 snackMessage: 'Email created successfully',
                                 isLoading: false
@@ -108,7 +118,6 @@ class CompanyLogin extends Component {
                     this.setState({
                         isLoading: false,
                     });
-                    this.props.history.push('/dashboard');
                 })
                 .catch(err => {
                     this.setState({
@@ -126,7 +135,7 @@ class CompanyLogin extends Component {
             isSignIn,
             snackOpen, snackMessage,
             email, password,
-            confirmPassword, ntn, businessType, proprietorName, cnic
+            confirmPassword, fatherName, firstName, lastName, cnic, subject, education, gpa, dob
         } = this.state;
         if (isLoading) return (
             <div className='center-box'>
@@ -177,27 +186,27 @@ class CompanyLogin extends Component {
                                 variant='filled'
                             />
                             <TextField
-                                label="National Tax Number"
+                                label="Father's Name"
                                 type='text'
-                                name='ntn' value={ntn}
+                                name='fatherName' value={fatherName}
                                 onChange={this.handleChange}
                                 fullWidth={true}
                                 margin="dense"
                                 variant='filled'
                             />
                             <TextField
-                                label="Business Type"
+                                label="First Name"
                                 type='text'
-                                name='businessType' value={businessType}
+                                name='firstName' value={firstName}
                                 onChange={this.handleChange}
                                 fullWidth={true}
                                 margin="dense"
                                 variant='filled'
                             />
                             <TextField
-                                label="Proprietor Name"
+                                label="Last Name"
                                 type='text'
-                                name='proprietorName,' value={proprietorName}
+                                name='lastName' value={lastName}
                                 onChange={this.handleChange}
                                 fullWidth={true}
                                 margin="dense"
@@ -207,6 +216,43 @@ class CompanyLogin extends Component {
                                 label="Computerized-National-Identity-Card (CNIC)"
                                 type='text'
                                 name='cnic' value={cnic}
+                                onChange={this.handleChange}
+                                fullWidth={true}
+                                margin="dense"
+                                variant='filled'
+                            />
+                            <TextField
+                                label="Subject"
+                                type='text'
+                                name='subject' value={subject}
+                                onChange={this.handleChange}
+                                fullWidth={true}
+                                margin="dense"
+                                variant='filled'
+                            />
+                            <TextField
+                                label="Education"
+                                type='text'
+                                name='education' value={education}
+                                onChange={this.handleChange}
+                                fullWidth={true}
+                                margin="dense"
+                                variant='filled'
+                            />
+                            <TextField
+                                label="Grade Point Average (GPA)"
+                                type='text'
+                                name='gpa' value={gpa}
+                                onChange={this.handleChange}
+                                fullWidth={true}
+                                margin="dense"
+                                variant='filled'
+                            />
+                            <TextField
+                                label="Date of Birth"
+                                InputLabelProps={{ shrink: true }}
+                                type='date'
+                                name='dob' value={dob}
                                 onChange={this.handleChange}
                                 fullWidth={true}
                                 margin="dense"
@@ -247,4 +293,4 @@ class CompanyLogin extends Component {
     }
 }
 
-export default CompanyLogin;
+export default StudentLogin;

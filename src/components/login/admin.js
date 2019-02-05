@@ -4,14 +4,12 @@ import {
     Paper,
     TextField, Typography, Button
 } from '@material-ui/core';
-import {
-    auth
-} from 'firebase';
+import { auth } from 'firebase';
 
-import PositionedSnackbar from '../containers/snackbar';
+import PositionedSnackbar from '../../containers/snackbar';
 
-import './config';
-import '../App.css';
+import '../config';
+import '../../App.css';
 
 class AdminLogin extends Component {
     constructor() {
@@ -44,7 +42,6 @@ class AdminLogin extends Component {
                 this.setState({
                     isLoading: false,
                 });
-                this.props.history.push('/dashboard');
             })
             .catch(err => {
                 this.setState({
@@ -59,7 +56,7 @@ class AdminLogin extends Component {
         const {
             isLoading,
             snackOpen, snackMessage,
-            email, password,
+            email, password
         } = this.state;
         if (isLoading) return (
             <div className='center-box'>

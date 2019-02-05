@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import {
-    CircularProgress
+    CircularProgress, Button
 } from '@material-ui/core';
-import { auth } from 'firebase';
+import { auth, database } from 'firebase';
+
+import { connect } from "react-redux";
+import actions from '../store/actions'
 
 import PositionedSnackbar from '../containers/snackbar';
 
 import '../App.css';
+
+function mapStateToProps(store) {
+    return { store }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchData: data => dispatch(actions.fetchData(data)),
+    }
+}
 
 class Dashboard extends Component {
     constructor() {
@@ -21,27 +34,36 @@ class Dashboard extends Component {
 
     componentDidMount() {
         this.setState({ isLoading: true });
-        this.checkLoginStatus();
-    }
-    
-    checkLoginStatus = () => {
         auth().onAuthStateChanged(user => {
-            const { email, uid } = user;
-            if (uid) return this.setState({
-                uid,
-                isLoading: false,
-                accountType: email.substr(0, email.length) === 'admin@domain.com' ? 'admin' : 'normal'
-            });
-            this.props.history.push('/login');
+            if (user) {
+                database().ref().child('profiles').on('value', snapshot => {
+                    const data = snapshot.val();
+                    this.props.fetchData(data);
+                    for (let key in data) {
+                        this.setState({
+                            accountType: data[key].uid === user.uid ? data[key].category : '',
+                            isLoading: false
+                        });
+                    }
+                });
+            } else {
+                this.props.history.push('/login');
+            }
         });
     }
 
     handleClose = () => {
         this.setState({ snackOpen: false });
-    };
+    }
+
+    onSignOut = () => {
+        auth().signOut()
+        this.props.history.push('/login');
+    }
 
     render() {
         const { isLoading, snackOpen, snackMessage } = this.state;
+        console.log(this.state.accountType);
         if (isLoading) return (
             <div className='center-box'>
                 <CircularProgress
@@ -51,7 +73,13 @@ class Dashboard extends Component {
         );
         return (
             <div>
-                The Dashboard
+                <Button
+                    children='Sign Out'
+                    color='secondary'
+                    size='small'
+                    variant='contained'
+                    onClick={this.onSignOut}
+                />
                 <PositionedSnackbar
                     open={snackOpen}
                     message={snackMessage}
@@ -62,4 +90,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
