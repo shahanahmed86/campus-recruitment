@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Typography } from '@material-ui/core';
+import {
+    Typography
+} from '@material-ui/core';
 
 class HomePage extends Component {
     render() {
@@ -8,7 +10,7 @@ class HomePage extends Component {
                 <Typography
                     gutterBottom={true}
                     align='center'
-                    color='primary'
+                    color='secondary'
                     variant='h5'
                     children='Campus Recruitment Application'
                 />

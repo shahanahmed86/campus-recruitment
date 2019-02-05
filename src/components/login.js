@@ -1,29 +1,33 @@
 import React, { Component } from 'react';
 import {
-    AppBar, Tabs, Tab
+    AppBar, Tabs, Tab, CircularProgress
 } from '@material-ui/core';
 import { Route } from 'react-router-dom';
+import { auth } from 'firebase';
 
 import StudentLogin from './student';
+import CompanyLogin from './company';
+import AdminLogin from './admin';
+
 import '../App.css';
 
 const routes = [
     {
         exact: true,
         path: '/login/student',
-        main: () => <StudentLogin />
+        main: props => <StudentLogin {...props} />
     },
     {
         exact: true,
         path: '/login/company',
-        main: () => <h1>Company</h1>
+        main: props => <CompanyLogin {...props} />
     },
     {
         exact: true,
         path: '/login/admin',
-        main: () => <h1>Admin</h1>
+        main: props => <AdminLogin {...props} />
     }
-]
+];
 
 class LoginPage extends Component {
     constructor() {
@@ -34,6 +38,11 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
+        this.setState({ isLoading: true });
+        auth().onAuthStateChanged(user => {
+            if (user) return this.props.history.push('/dashboard');
+            this.setState({ isLoading: false });
+        })
         this.selection(this.state.selectedTab);
     }
 
@@ -65,7 +74,12 @@ class LoginPage extends Component {
     }
 
     render() {
-        const { selectedTab } = this.state;
+        const { selectedTab, isLoading } = this.state;
+        if (isLoading) return (
+            <div className='center-box'>
+                <CircularProgress color='secondary' />
+            </div>
+        );
         return (
             <div className='login-main'>
                 <AppBar position='relative'>
@@ -95,7 +109,7 @@ class LoginPage extends Component {
                                 key={ind}
                                 exact={val.exact}
                                 path={val.path}
-                                component={val.main}
+                                component={() => val.main(this.props)}
                             />
                         );
                     })}
