@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    CircularProgress, Button
+    CircularProgress, Button,
+    AppBar, Typography
 } from '@material-ui/core';
 import { auth, database } from 'firebase';
 
@@ -76,7 +77,7 @@ class Dashboard extends Component {
 
     render() {
         const { isLoading, snackOpen, snackMessage } = this.state;
-        if (isLoading) return (
+        if (isLoading && !this.props.store.currentUser.email) return (
             <div className='center-box'>
                 <CircularProgress
                     color='secondary'
@@ -85,13 +86,22 @@ class Dashboard extends Component {
         );
         return (
             <div>
-                <Button
-                    children='Sign Out'
-                    color='secondary'
-                    size='small'
-                    variant='contained'
-                    onClick={this.onSignOut}
-                />
+                <AppBar position='static'>
+                    <div className='styling-appbar'>
+                        <Typography
+                            children={this.props.store.currentUser.email}
+                            variant='h6'
+                            color='inherit'
+                        />
+                        <Button
+                            children='Sign Out'
+                            color='secondary'
+                            size='small'
+                            variant='contained'
+                            onClick={this.onSignOut}
+                        />
+                    </div>
+                </AppBar>
                 <PositionedSnackbar
                     open={snackOpen}
                     message={snackMessage}
