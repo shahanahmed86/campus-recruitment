@@ -1,7 +1,8 @@
 import actionsTypes from '../actions/types';
 
 const initialState = {
-    profile: {},
+    profiles: {},
+    currentUser: {},
 }
 
 const reducer = (state = initialState, action) => {
@@ -9,7 +10,13 @@ const reducer = (state = initialState, action) => {
         case actionsTypes.FETCHDATA: {
             return {
                 ...state,
-                profile: action.payload
+                profiles: action.payload
+            }
+        }
+        case actionsTypes.CURRENTUSER: {
+            return {
+                ...state,
+                currentUser: action.payload
             }
         }
         default: {

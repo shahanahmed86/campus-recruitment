@@ -1,5 +1,6 @@
 const actionsTypes = {
-    FETCHDATA: 'FETCHDATA'
+    FETCHDATA: 'FETCHDATA',
+    CURRENTUSER: 'CURRENTUSER'
 }
 
 export default actionsTypes;

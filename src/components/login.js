@@ -38,17 +38,15 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true });
         this.selection(this.state.selectedTab);
         auth().onAuthStateChanged(user => {
             if (user) return this.props.history.push('/dashboard');
-            this.setState({ isLoading: false });
         });
     }
 
     selectTab = selectedTab => {
-        this.setState({ selectedTab });
         this.selection(selectedTab);
+        this.setState({ selectedTab });
     }
 
     selection = val => {

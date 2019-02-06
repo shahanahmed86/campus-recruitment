@@ -70,8 +70,7 @@ class CompanyLogin extends Component {
                         .then(success => {
                             const uid = success.user.uid
                             database().ref().child('profiles').child(uid).set({
-                                email, password,
-                                confirmPassword, proprietor, cnic, ntn, businessType, turnover,
+                                email, proprietor, cnic, ntn, businessType, turnover,
                                 uid,
                                 isStatus: true,
                                 category: 'company'

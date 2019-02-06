@@ -5,6 +5,11 @@ const actions = {
         return dispatch => {
             dispatch({ type: actionsTypes.FETCHDATA, payload: data });
         }
+    },
+    currentUser: data => {
+        return dispatch => {
+            dispatch({ type: actionsTypes.CURRENTUSER, payload: data });
+        }
     }
 }
 

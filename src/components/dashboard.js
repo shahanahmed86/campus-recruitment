@@ -18,6 +18,7 @@ function mapStateToProps(store) {
 function mapDispatchToProps(dispatch) {
     return {
         fetchData: data => dispatch(actions.fetchData(data)),
+        currentUser: data => dispatch(actions.currentUser(data)),
     }
 }
 
@@ -28,27 +29,37 @@ class Dashboard extends Component {
             snackOpen: false,
             snackMessage: '',
             isLoading: false,
-            accountType: '',
         }
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true });
         auth().onAuthStateChanged(user => {
-            if (user) {
-                database().ref().child('profiles').on('value', snapshot => {
-                    const data = snapshot.val();
-                    this.props.fetchData(data);
-                    for (let key in data) {
-                        this.setState({
-                            accountType: data[key].uid === user.uid ? data[key].category : '',
-                            isLoading: false
-                        });
-                    }
-                });
-            } else {
-                this.props.history.push('/login');
+            if (user) return this.getData(user.uid);
+            this.props.history.push('/login');
+        });
+    }
+
+    getData = uid => {
+        database().ref().child('profiles').on('value', snapshot => {
+            const data = snapshot.val();
+            const currentUser = Object.values(data).find(val => val.uid === uid);
+            switch (currentUser.category) {
+                case 'company': {
+                    const companies = Object.values(data).filter(val => val.category === 'student');
+                    this.props.fetchData(companies);
+                    break;
+                }
+                case 'student': {
+                    const students = Object.values(data).filter(val => val.category === 'company');
+                    this.props.fetchData(students);
+                    break;
+                }
+                default: {
+                    const allProfile = Object.values(data).filter(val => val.category !== 'admin');
+                    this.props.fetchData(allProfile)
+                }
             }
+            this.props.currentUser(currentUser);
         });
     }
 
@@ -63,7 +74,6 @@ class Dashboard extends Component {
 
     render() {
         const { isLoading, snackOpen, snackMessage } = this.state;
-        console.log(this.state.accountType);
         if (isLoading) return (
             <div className='center-box'>
                 <CircularProgress

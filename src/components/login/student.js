@@ -76,8 +76,7 @@ class StudentLogin extends Component {
                         .then(success => {
                             const uid = success.user.uid
                             database().ref().child('profiles').child(uid).set({
-                                email, password,
-                                confirmPassword, fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
+                                email, fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
                                 uid,
                                 isStatus: true,
                                 category: 'student'
