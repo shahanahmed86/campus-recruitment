@@ -10,7 +10,12 @@ const actions = {
         return dispatch => {
             dispatch({ type: actionsTypes.CURRENTUSER, payload: data });
         }
-    }
+    },
+    clearReduxState: () => {
+        return dispatch => {
+            dispatch({ type: actionsTypes.CLEAR });
+        }
+    },
 }
 
 export default actions;

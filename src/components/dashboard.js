@@ -19,6 +19,7 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchData: data => dispatch(actions.fetchData(data)),
         currentUser: data => dispatch(actions.currentUser(data)),
+        clearReduxState: () => dispatch(actions.clearReduxState()),
     }
 }
 
@@ -69,6 +70,7 @@ class Dashboard extends Component {
 
     onSignOut = () => {
         auth().signOut()
+        this.props.clearReduxState();
         this.props.history.push('/login');
     }
 

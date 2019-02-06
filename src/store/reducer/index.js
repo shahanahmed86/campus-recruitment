@@ -19,6 +19,13 @@ const reducer = (state = initialState, action) => {
                 currentUser: action.payload
             }
         }
+        case actionsTypes.CLEAR: {
+            return {
+                ...state,
+                currentUser: {},
+                profiles: {}
+            }
+        }
         default: {
             return {
                 ...state
