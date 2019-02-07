@@ -8,6 +8,7 @@ import { auth } from 'firebase';
 import StudentLogin from './login/student';
 import CompanyLogin from './login/company';
 import AdminLogin from './login/admin';
+import HeaderText from './headertext';
 
 import '../App.css';
 
@@ -78,6 +79,7 @@ class LoginPage extends Component {
         );
         return (
             <div className='login-main'>
+                <HeaderText />
                 <AppBar position='relative'>
                     <Tabs
                         value={selectedTab}

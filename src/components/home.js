@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import {
-    Typography
+    AppBar, Typography
 } from '@material-ui/core';
+import HeaderText from './headertext';
 
 class HomePage extends Component {
     render() {
         return (
-            <div className='home-page'>
-                <Typography
-                    gutterBottom={true}
-                    align='center'
-                    color='secondary'
-                    variant='h5'
-                    children='Campus Recruitment Application'
-                />
+            <div>
+                <HeaderText />
+                <AppBar
+                    position='relative'
+                >
+                    <Typography
+                        color='inherit'
+                        align='center'
+                        variant='h6'
+                        children='Home Page Header'
+                    />
+                </AppBar>
             </div>
         );
     }

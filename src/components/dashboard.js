@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import actions from '../store/actions'
 
 import PositionedSnackbar from '../containers/snackbar';
+import HeaderText from './headertext';
 
 import '../App.css';
 
@@ -86,6 +87,7 @@ class Dashboard extends Component {
         );
         return (
             <div>
+                <HeaderText />
                 <AppBar position='static'>
                     <div className='styling-appbar'>
                         <Typography
