@@ -5,7 +5,7 @@ import {
 
 class HeaderText extends Component {
     gotoHome = () => {
-        this.props.history.push('/');
+        this.props.history.push('/index/home');
     }
     render() {
         return (

@@ -25,13 +25,15 @@ body {
 /* Header */
 
 .header-tag {
-  margin: 15px 0px;
+  margin: 5px 0px;
   text-align: center;
   font-variant: small-caps
 }
 
 .header-tag Button {
-  font-size: 125%;
+  font-size: 150%;
+  font-weight: bolder;
+  text-shadow: 2px 2px 2px brown;
 }
 
 /* Login Page */

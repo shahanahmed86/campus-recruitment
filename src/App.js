@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import LoginPage from './components/login';
 import Dashboard from './components/dashboard';
-import HomePage from './components/home';
+import HomePage from './components/index';
 
 import store from './store';
 
@@ -16,9 +16,9 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className='container'>
-            <Route path='/' component={HomePage} exact/>
-            <Route path='/login' component={LoginPage} />
-            <Route path='/dashboard' component={Dashboard} />
+            <Route path='/index' component={HomePage}/>
+            <Route path='/login' component={LoginPage}/>
+            <Route path='/dashboard' component={Dashboard}/>
           </div>
         </Router>
       </Provider>
