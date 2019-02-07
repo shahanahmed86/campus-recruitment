@@ -79,7 +79,7 @@ class LoginPage extends Component {
         );
         return (
             <div className='login-main'>
-                <HeaderText />
+                <HeaderText {...this.props} />
                 <AppBar position='relative'>
                     <Tabs
                         value={selectedTab}

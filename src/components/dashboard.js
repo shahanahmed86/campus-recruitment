@@ -38,7 +38,7 @@ class Dashboard extends Component {
     componentDidMount() {
         auth().onAuthStateChanged(user => {
             if (user) return this.getData(user.uid);
-            this.props.history.push('/login');
+            this.props.history.push('/');
         });
     }
 
@@ -73,7 +73,7 @@ class Dashboard extends Component {
     onSignOut = () => {
         auth().signOut()
         this.props.clearReduxState();
-        this.props.history.push('/login');
+        this.props.history.push('/');
     }
 
     render() {
@@ -87,7 +87,7 @@ class Dashboard extends Component {
         );
         return (
             <div>
-                <HeaderText />
+                <HeaderText {...this.props} />
                 <AppBar position='static'>
                     <div className='styling-appbar'>
                         <Typography

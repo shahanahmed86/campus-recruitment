@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {
-    Typography
+    Button
 } from '@material-ui/core';
 
 class HeaderText extends Component {
+    gotoHome = () => {
+        this.props.history.push('/');
+    }
     render() {
         return (
-            <div className='home-page'>
-                <Typography
-                    gutterBottom={true}
-                    align='center'
+            <div className='header-tag'>
+                <Button
+                    onClick={this.gotoHome}
                     color='secondary'
-                    variant='h5'
+                    variant='text'
                     children='Campus Recruitment Application'
                 />
             </div>

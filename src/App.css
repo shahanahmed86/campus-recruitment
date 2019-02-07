@@ -22,11 +22,16 @@ body {
   align-items: center;
 }
 
-/* Home Page */
+/* Header */
 
-.home-page {
-  margin-bottom: 15px;
-  margin-top: 15px;
+.header-tag {
+  margin: 15px 0px;
+  text-align: center;
+  font-variant: small-caps
+}
+
+.header-tag Button {
+  font-size: 125%;
 }
 
 /* Login Page */
@@ -63,4 +68,13 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+}
+
+/* Home page styling */
+
+.home-appbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 8px;
 }
