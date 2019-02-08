@@ -6,6 +6,8 @@ import { Route } from 'react-router-dom';
 
 import HeaderText from './headertext';
 import IndexPage from "./home/home";
+import About from "./home/about";
+import Contact from "./home/contact";
 
 const routes = [
     {
@@ -13,6 +15,16 @@ const routes = [
         exact: true,
         main: props => <IndexPage {...props} />
     },
+    {
+        path: '/index/about',
+        exact: true,
+        main: props => <About {...props} />
+    },
+    {
+        path: '/index/contact',
+        exact: true,
+        main: props => <Contact {...props} />
+    }
 ]
 
 class HomePage extends Component {

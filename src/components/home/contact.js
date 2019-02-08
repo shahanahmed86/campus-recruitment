@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 //     AppBar, Button
 // } from '@material-ui/core';
 
-class IndexPage extends Component {
+class Contact extends Component {
 
     render() {
         return (
             <div>
-                Home
+                Contact Us
             </div>
         );
     }
 }
 
-export default IndexPage;
+export default Contact;
