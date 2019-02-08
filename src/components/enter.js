@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 class EnterThePage extends Component {
     gotoIndex = () => {
-        this.props.history.push('/index/home');
+        this.props.history.push('/login');
     }
     render() {
         return (
@@ -11,13 +11,8 @@ class EnterThePage extends Component {
                 <Button
                     color='secondary'
                     variant='text'
-                    children='Enter'
+                    children='Enter to Login page'
                     onClick={this.gotoIndex}
-                />
-                <Typography
-                    color='inherit'
-                    variant='h6'
-                    children="To get access into the website click above"
                 />
             </div>
         );

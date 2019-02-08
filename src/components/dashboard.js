@@ -48,18 +48,18 @@ class Dashboard extends Component {
             const currentUser = Object.values(data).find(val => val.uid === uid);
             switch (currentUser.category) {
                 case 'company': {
-                    const companies = Object.values(data).filter(val => val.category === 'student');
-                    this.props.fetchData(companies);
-                    break;
-                }
-                case 'student': {
-                    const students = Object.values(data).filter(val => val.category === 'company');
+                    const students = Object.values(data).filter(val => val.category === 'student');
                     this.props.fetchData(students);
                     break;
                 }
+                case 'student': {
+                    const companies = Object.values(data).filter(val => val.category === 'company');
+                    this.props.fetchData(companies);
+                    break;
+                }
                 default: {
-                    const allProfile = Object.values(data).filter(val => val.category !== 'admin');
-                    this.props.fetchData(allProfile)
+                    const profiles = Object.values(data).filter(val => val.category !== 'admin');
+                    this.props.fetchData(profiles)
                 }
             }
             this.props.currentUser(currentUser);
@@ -73,42 +73,45 @@ class Dashboard extends Component {
     onSignOut = () => {
         auth().signOut()
         this.props.clearReduxState();
-        this.props.history.push('/index/home');
+        this.props.history.push('/login');
     }
 
     render() {
-        const { isLoading, snackOpen, snackMessage } = this.state;
-        if (isLoading && !this.props.store.currentUser.email) return (
-            <div className='center-box'>
-                <CircularProgress
-                    color='secondary'
-                />
-            </div>
-        );
+        const { snackOpen, snackMessage } = this.state;
         return (
             <div>
-                <HeaderText {...this.props} />
-                <AppBar position='static'>
-                    <div className='styling-appbar'>
-                        <Typography
-                            children={this.props.store.currentUser.email}
-                            variant='h6'
-                            color='inherit'
-                        />
-                        <Button
-                            children='Sign Out'
-                            color='secondary'
-                            size='small'
-                            variant='contained'
-                            onClick={this.onSignOut}
+                {this.props.store.currentUser.email ? (
+                    <div>
+                        <HeaderText {...this.props} />
+                        <AppBar position='static'>
+                            <div className='styling-appbar'>
+                                <Typography
+                                    children={this.props.store.currentUser.email}
+                                    variant='h6'
+                                    color='inherit'
+                                />
+                                <Button
+                                    children='Sign Out'
+                                    color='secondary'
+                                    size='small'
+                                    variant='contained'
+                                    onClick={this.onSignOut}
+                                />
+                            </div>
+                        </AppBar>
+                        <PositionedSnackbar
+                            open={snackOpen}
+                            message={snackMessage}
+                            close={this.handleClose}
                         />
                     </div>
-                </AppBar>
-                <PositionedSnackbar
-                    open={snackOpen}
-                    message={snackMessage}
-                    close={this.handleClose}
-                />
+                ) : (
+                        <div className='center-box'>
+                            <CircularProgress
+                                color='secondary'
+                            />
+                        </div>
+                    )}
             </div>
         );
     }
