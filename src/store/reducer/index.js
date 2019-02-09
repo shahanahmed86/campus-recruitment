@@ -3,6 +3,7 @@ import actionsTypes from '../actions/types';
 const initialState = {
     profiles: {},
     currentUser: {},
+    isLoading: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 profiles: action.payload
+            }
+        }
+        case actionsTypes.ISLOADING: {
+            return {
+                ...state,
+                isLoading: action.payload
             }
         }
         case actionsTypes.CURRENTUSER: {

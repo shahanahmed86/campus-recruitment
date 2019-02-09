@@ -11,6 +11,11 @@ const actions = {
             dispatch({ type: actionsTypes.CURRENTUSER, payload: data });
         }
     },
+    renderCondition: data => {
+        return dispatch => {
+            dispatch({ type: actionsTypes.ISLOADING, payload: data });
+        }
+    },
     clearReduxState: () => {
         return dispatch => {
             dispatch({ type: actionsTypes.CLEAR });

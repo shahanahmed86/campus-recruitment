@@ -19,9 +19,10 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        renderCondition: condition => dispatch(actions.renderCondition(condition)),
         fetchData: data => dispatch(actions.fetchData(data)),
         currentUser: data => dispatch(actions.currentUser(data)),
-        clearReduxState: () => dispatch(actions.clearReduxState()),
+        clearReduxState: () => dispatch(actions.clearReduxState())
     }
 }
 
@@ -31,14 +32,18 @@ class Dashboard extends Component {
         this.state = {
             snackOpen: false,
             snackMessage: '',
-            isLoading: false,
         }
     }
 
     componentDidMount() {
+        this.props.renderCondition(true);
         auth().onAuthStateChanged(user => {
-            if (user) return this.getData(user.uid);
-            this.props.history.push('/index/home');
+            if (user) {
+                this.getData(user.uid)
+                this.props.renderCondition(false);
+            } else {
+                this.props.history.push('/login/student');
+            }
         });
     }
 
@@ -73,20 +78,26 @@ class Dashboard extends Component {
     onSignOut = () => {
         auth().signOut()
         this.props.clearReduxState();
-        this.props.history.push('/login');
+        this.props.history.push('/login/student');
     }
 
     render() {
         const { snackOpen, snackMessage } = this.state;
+        const { isLoading, currentUser } = this.props.store;
+        if (isLoading) return (
+            <div className='center-box'>
+                <CircularProgress color='secondary' />
+            </div>
+        );
         return (
             <div>
-                {this.props.store.currentUser.email ? (
-                    <div>
-                        <HeaderText {...this.props} />
+                <HeaderText {...this.props} />
+                <div>
+                    {currentUser.email && (
                         <AppBar position='static'>
                             <div className='styling-appbar'>
                                 <Typography
-                                    children={this.props.store.currentUser.email}
+                                    children={currentUser.email}
                                     variant='h6'
                                     color='inherit'
                                 />
@@ -99,19 +110,13 @@ class Dashboard extends Component {
                                 />
                             </div>
                         </AppBar>
-                        <PositionedSnackbar
-                            open={snackOpen}
-                            message={snackMessage}
-                            close={this.handleClose}
-                        />
-                    </div>
-                ) : (
-                        <div className='center-box'>
-                            <CircularProgress
-                                color='secondary'
-                            />
-                        </div>
                     )}
+                    <PositionedSnackbar
+                        open={snackOpen}
+                        message={snackMessage}
+                        close={this.handleClose}
+                    />
+                </div>
             </div>
         );
     }

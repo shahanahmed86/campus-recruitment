@@ -4,6 +4,8 @@ import {
 } from '@material-ui/core';
 import { Route } from 'react-router-dom';
 import { auth } from 'firebase';
+import { connect } from 'react-redux';
+import actions from '../store/actions'
 
 import StudentLogin from './login/student';
 import CompanyLogin from './login/company';
@@ -30,6 +32,16 @@ const routes = [
     }
 ];
 
+function mapStateToProps(store) {
+    return { store }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        renderCondition: condition => dispatch(actions.renderCondition(condition)),
+    }
+}
+
 class LoginPage extends Component {
     constructor() {
         super();
@@ -39,9 +51,14 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
+        this.props.renderCondition(true);
         this.selection(this.state.selectedTab);
         auth().onAuthStateChanged(user => {
-            if (user) return this.props.history.push('/dashboard');
+            if (user) {
+                this.props.history.push('/dashboard')
+            } else {
+                this.props.renderCondition(false);
+            }
         });
     }
 
@@ -65,13 +82,15 @@ class LoginPage extends Component {
                 break;
             }
             default: {
+                this.props.history.push('/login/student');
                 break;
             }
         }
     }
 
     render() {
-        const { selectedTab, isLoading } = this.state;
+        const { selectedTab } = this.state;
+        const { isLoading } = this.props.store;
         if (isLoading) return (
             <div className='center-box'>
                 <CircularProgress color='secondary' />
@@ -117,4 +136,4 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

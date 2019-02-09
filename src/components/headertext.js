@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-    Button
+    Typography
 } from '@material-ui/core';
 
-class HeaderText extends Component {
-    gotoHome = () => {
-        this.props.history.push('/login');
-    }
-    render() {
-        return (
-            <div className='header-tag'>
-                <Button
-                    onClick={this.gotoHome}
-                    color='secondary'
-                    variant='text'
-                    children='Campus Recruitment Application'
-                />
-            </div>
-        );
-    }
+function HeaderText() {
+    return (
+        <div className='header-tag'>
+            <Typography
+                align='center'
+                color='secondary'
+                variant='h5'
+                children='Campus Recruitment Application'
+            />
+        </div>
+    );
 }
 
 export default HeaderText;
