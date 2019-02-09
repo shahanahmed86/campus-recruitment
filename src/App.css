@@ -11,7 +11,7 @@ body {
 .container {
   width: 95%;
   margin: auto;
-  overflow: hidden;
+  overflow: auto;
   opacity: 0.90;
 }
 
@@ -89,6 +89,22 @@ body {
 
 .dashboard-paper-width {
   margin: 5px 0px;
-  min-width: 300px;
+  max-width: 350px;
   padding: 10px;
+}
+
+.dashboard-profiles {
+  min-width: 400px;
+  max-width: fit-content;
+}
+
+.renderTable {
+  margin: 10px 0px;
+  min-width: fit-content;
+  max-width: 400px;
+}
+
+.name-styling:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

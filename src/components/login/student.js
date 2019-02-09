@@ -79,6 +79,7 @@ class StudentLogin extends Component {
                                 email, fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
                                 uid,
                                 isStatus: true,
+                                editRequest: false,
                                 category: 'student'
                             });
                             email = password = confirmPassword = fatherName = firstName = lastName = cnic = subject = education = gpa = dob = '';

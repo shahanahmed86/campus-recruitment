@@ -11,7 +11,8 @@ import { Route } from 'react-router-dom';
 import actions from '../store/actions';
 import PositionedSnackbar from '../containers/snackbar';
 import HeaderText from './headertext';
-import OwnProfile from './dashboard/profile';
+import OwnProfile from './dashboard/ownprofile';
+import Profiles from './dashboard/profiles';
 
 import '../App.css';
 
@@ -24,7 +25,7 @@ const routes = [
     {
         path: '/dashboard/allprofiles',
         exact: true,
-        main: () => <h1>AllProfiles</h1>
+        main: props => <Profiles {...props} />
     }
 ];
 

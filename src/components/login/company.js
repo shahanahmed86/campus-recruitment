@@ -73,6 +73,7 @@ class CompanyLogin extends Component {
                                 email, proprietor, cnic, ntn, businessType, turnover,
                                 uid,
                                 isStatus: true,
+                                editRequest: false,
                                 category: 'company'
                             });
                             email = password = confirmPassword = proprietor = cnic = ntn = businessType = turnover = '';
