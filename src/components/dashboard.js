@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import {
     CircularProgress, Button,
-    AppBar, Typography
+    AppBar, Typography,
+    Tabs, Tab
 } from '@material-ui/core';
 import { auth, database } from 'firebase';
-
 import { connect } from "react-redux";
-import actions from '../store/actions'
+import { Route } from 'react-router-dom';
 
+import actions from '../store/actions';
 import PositionedSnackbar from '../containers/snackbar';
 import HeaderText from './headertext';
+import OwnProfile from './dashboard/profile';
 
 import '../App.css';
+
+const routes = [
+    {
+        path: '/dashboard/profile',
+        exact: true,
+        main: props => <OwnProfile {...props} />
+    },
+    {
+        path: '/dashboard/allprofiles',
+        exact: true,
+        main: () => <h1>AllProfiles</h1>
+    }
+];
 
 function mapStateToProps(store) {
     return { store }
@@ -32,14 +47,16 @@ class Dashboard extends Component {
         this.state = {
             snackOpen: false,
             snackMessage: '',
+            selectedTab: 0,
         }
     }
-
+    
     componentDidMount() {
         this.props.renderCondition(true);
         auth().onAuthStateChanged(user => {
             if (user) {
                 this.getData(user.uid)
+                this.selection(this.state.selectedTab);
                 this.props.renderCondition(false);
             } else {
                 this.props.history.push('/login/student');
@@ -81,8 +98,44 @@ class Dashboard extends Component {
         this.props.history.push('/login/student');
     }
 
+    selectTab = selectedTab => {
+        this.selection(selectedTab);
+        this.setState({ selectedTab });
+    }
+
+    selection = val => {
+        switch (val) {
+            case 0: {
+                this.props.history.push('/dashboard/profile');
+                break;
+            }
+            case 1: {
+                this.props.history.push('/dashboard/allprofiles');
+                break;
+            }
+            default: {
+                this.props.history.push('/dashboard/profile');
+                break;
+            }
+        }
+    }
+
+    getLabel = () => {
+        switch (this.props.store.currentUser.category) {
+            case 'company': {
+                return 'Students'
+            }
+            case 'student': {
+                return 'Companies'
+            }
+            default: {
+                return 'All Profiles'
+            }
+        }
+    }
+
     render() {
-        const { snackOpen, snackMessage } = this.state;
+        const { snackOpen, snackMessage, selectedTab } = this.state;
         const { isLoading, currentUser } = this.props.store;
         if (isLoading) return (
             <div className='center-box'>
@@ -92,8 +145,8 @@ class Dashboard extends Component {
         return (
             <div>
                 <HeaderText {...this.props} />
-                <div>
-                    {currentUser.email && (
+                {currentUser.email && (
+                    <div>
                         <AppBar position='static'>
                             <div className='styling-appbar'>
                                 <Typography
@@ -110,13 +163,43 @@ class Dashboard extends Component {
                                 />
                             </div>
                         </AppBar>
-                    )}
-                    <PositionedSnackbar
-                        open={snackOpen}
-                        message={snackMessage}
-                        close={this.handleClose}
-                    />
-                </div>
+                        <div className='tab-styling'>
+                            <AppBar position='relative'>
+                                <Tabs
+                                    value={selectedTab}
+                                    variant='fullWidth'
+                                    centered
+                                >
+                                    <Tab
+                                        label={currentUser.category}
+                                        onClick={() => this.selectTab(0)}
+                                    />
+                                    <Tab
+                                        label={this.getLabel()}
+                                        onClick={() => this.selectTab(1)}
+                                    />
+                                </Tabs>
+                            </AppBar>
+                        </div>
+                        <div>
+                            {routes.map((val, ind) => {
+                                return (
+                                    <Route
+                                        key={ind}
+                                        path={val.path}
+                                        exact={val.exact}
+                                        component={val.main}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+                <PositionedSnackbar
+                    open={snackOpen}
+                    message={snackMessage}
+                    close={this.handleClose}
+                />
             </div>
         );
     }

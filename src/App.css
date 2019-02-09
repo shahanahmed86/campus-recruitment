@@ -80,3 +80,15 @@ body {
   align-items: center;
   padding: 10px;
 }
+
+.tab-styling {
+  min-width: 225px;
+  max-width: fit-content;
+  margin-top: 12px;
+}
+
+.dashboard-paper-width {
+  margin: 5px 0px;
+  min-width: 300px;
+  padding: 10px;
+}

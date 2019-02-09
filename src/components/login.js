@@ -126,7 +126,7 @@ class LoginPage extends Component {
                                 key={ind}
                                 exact={val.exact}
                                 path={val.path}
-                                component={() => val.main(this.props)}
+                                component={val.main}
                             />
                         );
                     })}
