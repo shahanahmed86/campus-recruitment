@@ -21,17 +21,17 @@ class StudentLogin extends Component {
             snackMessage: '',
             isLoading: false,
             isSignIn: true,
-            email: 'shahan@domain.com',
-            password: '123abc456',
-            confirmPassword: '123abc456',
-            fatherName: 'Abdus Subhan Khan',
-            firstName: 'Shahan',
-            lastName: 'Ahmed Khan',
-            cnic: '42301-8964999-9',
-            subject: 'Commerce',
-            education: 'Intermediate',
-            gpa: '3.0',
-            dob: '1986-01-29'
+            email: '',
+            password: '',
+            confirmPassword: '',
+            fatherName: '',
+            firstName: '',
+            lastName: '',
+            cnic: '',
+            subject: '',
+            education: '',
+            gpa: '',
+            dob: ''
         }
     }
 
@@ -49,17 +49,17 @@ class StudentLogin extends Component {
     onChangeLoginState = () => {
         this.setState(state => ({
             isSignIn: !state.isSignIn,
-            // email: '',
-            // password: '',
-            // confirmPassword: '',
-            // fatherName: '',
-            // firstName: '',
-            // lastName: '',
-            // cnic: '',
-            // subject: '',
-            // education: '',
-            // gpa: '',
-            // dob: ''
+            email: '',
+            password: '',
+            confirmPassword: '',
+            fatherName: '',
+            firstName: '',
+            lastName: '',
+            cnic: '',
+            subject: '',
+            education: '',
+            gpa: '',
+            dob: ''
         }));
     }
 

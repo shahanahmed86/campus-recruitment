@@ -71,12 +71,12 @@ class Dashboard extends Component {
             const currentUser = Object.values(data).find(val => val.uid === uid);
             switch (currentUser.category) {
                 case 'company': {
-                    const students = Object.values(data).filter(val => val.category === 'student');
+                    const students = Object.values(data).filter(val => val.category === 'student' && val.isStatus);
                     this.props.fetchData(students);
                     break;
                 }
                 case 'student': {
-                    const companies = Object.values(data).filter(val => val.category === 'company');
+                    const companies = Object.values(data).filter(val => val.category === 'company' && val.isStatus);
                     this.props.fetchData(companies);
                     break;
                 }

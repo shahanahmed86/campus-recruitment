@@ -21,14 +21,15 @@ class CompanyLogin extends Component {
             snackMessage: '',
             isLoading: false,
             isSignIn: true,
-            email: 'brotherenterprises@domain.com',
-            password: '123abc456',
-            confirmPassword: '123abc456',
-            proprietor: 'Noman Akhtar',
-            cnic: '41234-1234567-8',
-            ntn: '1234567-8',
-            businessType: 'Distribution',
-            turnover: 7500000
+            email: '',
+            password: '',
+            confirmPassword: '',
+            name: '',
+            proprietor: '',
+            cnic: '',
+            ntn: '',
+            businessType: '',
+            turnover: 0
         }
     }
 
@@ -46,14 +47,15 @@ class CompanyLogin extends Component {
     onChangeLoginState = () => {
         this.setState(state => ({
             isSignIn: !state.isSignIn,
-            // email: '',
-            // password: '',
-            // confirmPassword: '',
-            // proprietor: '',
-            // cnic: '',
-            // ntn: '',
-            // businessType: '',
-            // turnover: 0
+            email: '',
+            password: '',
+            confirmPassword: '',
+            name: '',
+            proprietor: '',
+            cnic: '',
+            ntn: '',
+            businessType: '',
+            turnover: 0
         }));
     }
 
@@ -61,24 +63,24 @@ class CompanyLogin extends Component {
         this.setState({ isLoading: true });
         let {
             isSignIn,
-            email, password, confirmPassword, proprietor, cnic, ntn, businessType, turnover
+            email, password, confirmPassword, name, proprietor, cnic, ntn, businessType, turnover
         } = this.state;
         if (!isSignIn) {
-            if (email && password && confirmPassword && proprietor && cnic && ntn && businessType && turnover) {
+            if (email && password && confirmPassword && name && proprietor && cnic && ntn && businessType && turnover) {
                 if (password === confirmPassword) {
                     auth().createUserWithEmailAndPassword(email, password)
                         .then(success => {
                             const uid = success.user.uid
                             database().ref().child('profiles').child(uid).set({
-                                email, proprietor, cnic, ntn, businessType, turnover,
+                                email, name, proprietor, cnic, ntn, businessType, turnover,
                                 uid,
                                 isStatus: true,
                                 editRequest: false,
                                 category: 'company'
                             });
-                            email = password = confirmPassword = proprietor = cnic = ntn = businessType = turnover = '';
+                            email = password = confirmPassword = name = proprietor = cnic = ntn = businessType = turnover = '';
                             this.setState({
-                                email, password, confirmPassword, proprietor, cnic, ntn, businessType, turnover,
+                                email, password, confirmPassword, name, proprietor, cnic, ntn, businessType, turnover,
                                 snackOpen: true,
                                 snackMessage: 'Email created successfully',
                                 isLoading: false
@@ -128,7 +130,7 @@ class CompanyLogin extends Component {
             isLoading,
             isSignIn,
             snackOpen, snackMessage,
-            email, password, confirmPassword, proprietor, cnic, ntn, businessType, turnover
+            email, password, confirmPassword, name, proprietor, cnic, ntn, businessType, turnover
         } = this.state;
         if (isLoading) return (
             <div className='center-box'>
@@ -173,6 +175,15 @@ class CompanyLogin extends Component {
                                 label="Confirm Password"
                                 type='password'
                                 name='confirmPassword' value={confirmPassword}
+                                onChange={this.handleChange}
+                                fullWidth={true}
+                                margin="dense"
+                                variant='filled'
+                            />
+                            <TextField
+                                label="Name"
+                                type='text'
+                                name='name' value={name}
                                 onChange={this.handleChange}
                                 fullWidth={true}
                                 margin="dense"

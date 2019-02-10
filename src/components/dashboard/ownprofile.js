@@ -24,6 +24,7 @@ class OwnProfile extends Component {
             education: props.store.currentUser.education,
             gpa: props.store.currentUser.gpa,
             dob: props.store.currentUser.dob,
+            name: props.store.currentUser.name,
             proprietor: props.store.currentUser.proprietor,
             ntn: props.store.currentUser.ntn,
             businessType: props.store.currentUser.businessType,
@@ -34,7 +35,7 @@ class OwnProfile extends Component {
     isEditState() {
         const {
             fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
-            proprietor, ntn, businessType, turnover
+            name, proprietor, ntn, businessType, turnover
         } = this.state;
         const { currentUser } = this.props.store;
         if (currentUser.editRequest) {
@@ -44,7 +45,7 @@ class OwnProfile extends Component {
                 if (fatherName === currentUser.fatherName && firstName === currentUser.firstName && lastName === currentUser.lastName && cnic === currentUser.cnic && subject === currentUser.subject && education === currentUser.education && gpa === currentUser.gpa && dob === currentUser.dob) return true;
                 return false;
             } else {
-                if (proprietor === currentUser.proprietor && ntn === currentUser.ntn && businessType === currentUser.businessType && cnic === currentUser.cnic && turnover === currentUser.turnover) return true;
+                if (name === currentUser.name && proprietor === currentUser.proprietor && ntn === currentUser.ntn && businessType === currentUser.businessType && cnic === currentUser.cnic && turnover === currentUser.turnover) return true;
                 return false;
             }
         }
@@ -61,13 +62,13 @@ class OwnProfile extends Component {
         const { currentUser } = this.props.store;
         const {
             fatherName, firstName, lastName, cnic, subject, education, gpa, dob,
-            proprietor, ntn, businessType, turnover
+            name, proprietor, ntn, businessType, turnover
         } = this.state
         let updatedProfile = {}
         if (currentUser.category === 'student') {
             updatedProfile = { fatherName, firstName, lastName, cnic, subject, education, gpa, dob }
         } else {
-            updatedProfile = { proprietor, cnic, ntn, businessType, turnover }
+            updatedProfile = { name, proprietor, cnic, ntn, businessType, turnover }
         }
         database().ref().child('profiles').child(currentUser.uid).update({
             updatedProfile,
@@ -188,11 +189,22 @@ class OwnProfile extends Component {
             }
             case 'company': {
                 const {
-                    proprietor, cnic, ntn, businessType, turnover
+                    name, proprietor, cnic, ntn, businessType, turnover
                 } = this.state;
                 const { editRequest } = this.props.store.currentUser;
                 return (
                     <div>
+                        <TextField
+                            label="Name"
+                            type='text'
+                            name='name'
+                            value={editRequest ? this.props.store.currentUser.updatedProfile.name : name}
+                            disabled={editRequest}
+                            onChange={this.handleChange}
+                            fullWidth={true}
+                            margin="dense"
+                            variant='filled'
+                        />
                         <TextField
                             label="Proprietor"
                             type='text'
@@ -267,14 +279,15 @@ class OwnProfile extends Component {
     render() {
         const { currentUser } = this.props.store;
         if (currentUser.category === 'admin') return (
-            <div className='center-box'>
+            <Paper className='dashboard-paper-width'>
                 <Typography
+                    style={{paddingTop: 15}}
                     align='center'
-                    variant='h5'
+                    paragraph={true}
                     color='secondary'
                     children="An Admin doesn't need to edit his profile"
                 />
-            </div>
+            </Paper>
         );
         return (
             <div>
