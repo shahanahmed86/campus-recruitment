@@ -16,6 +16,11 @@ const actions = {
             dispatch({ type: actionsTypes.ISLOADING, payload: data });
         }
     },
+    changeSignUp: data => {
+        return dispatch => {
+            dispatch({ type: actionsTypes.ISSIGNUP, payload: data });
+        }
+    },
     clearReduxState: () => {
         return dispatch => {
             dispatch({ type: actionsTypes.CLEAR });

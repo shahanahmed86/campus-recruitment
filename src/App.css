@@ -2,7 +2,6 @@
 
 body {
   font-family: Verdana, Tahoma, sans-serif;
-  line-height: 1.5rem;
   overflow-y: scroll;
   background: url('./images/back.jpg') no-repeat fixed;
   background-size: cover;
@@ -11,8 +10,8 @@ body {
 .container {
   width: 95%;
   margin: auto;
-  overflow: auto;
-  opacity: 0.90;
+  overflow-x: auto;
+  opacity: 0.85;
 }
 
 .center-box {
@@ -82,7 +81,6 @@ body {
 }
 
 .tab-styling {
-  min-width: 225px;
   max-width: fit-content;
   margin-top: 12px;
 }
@@ -90,18 +88,16 @@ body {
 .dashboard-paper-width {
   margin: 5px 0px;
   max-width: 350px;
-  padding: 5px;
+  padding: 15px;
 }
 
 .dashboard-profiles {
-  min-width: 400px;
   max-width: fit-content;
 }
 
 .renderTable {
   margin: 10px 0px;
-  min-width: fit-content;
-  max-width: 400px;
+  max-width: fit-content;
 }
 
 .name-styling:hover {

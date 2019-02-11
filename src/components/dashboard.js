@@ -38,6 +38,7 @@ function mapDispatchToProps(dispatch) {
         renderCondition: condition => dispatch(actions.renderCondition(condition)),
         fetchData: data => dispatch(actions.fetchData(data)),
         currentUser: data => dispatch(actions.currentUser(data)),
+        changeSignUp: condition => dispatch(actions.changeSignUp(condition)),
         clearReduxState: () => dispatch(actions.clearReduxState())
     }
 }
@@ -60,7 +61,7 @@ class Dashboard extends Component {
                 this.selection(this.state.selectedTab);
                 this.props.renderCondition(false);
             } else {
-                this.props.history.push('/login/student');
+                this.props.history.push('/login');
             }
         });
     }
@@ -96,7 +97,8 @@ class Dashboard extends Component {
     onSignOut = () => {
         auth().signOut()
         this.props.clearReduxState();
-        this.props.history.push('/login/student');
+        this.props.changeSignUp(false);
+        this.props.history.push('/login');
     }
 
     selectTab = selectedTab => {

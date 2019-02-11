@@ -3,11 +3,11 @@ import {
     Paper, Typography, Button
 } from '@material-ui/core'
 import { connect } from "react-redux";
+import { database } from 'firebase';
 
 import ProfileDetail from './profiledetails';
 
 import '../../App.css';
-import { database } from 'firebase';
 
 function mapStateToProps(store) {
     return { store }

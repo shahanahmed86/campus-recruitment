@@ -4,6 +4,7 @@ const initialState = {
     profiles: {},
     currentUser: {},
     isLoading: false,
+    isSignUp: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +19,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: action.payload
+            }
+        }
+        case actionsTypes.ISSIGNUP: {
+            return {
+                ...state,
+                isSignUp: action.payload
             }
         }
         case actionsTypes.CURRENTUSER: {

@@ -7,7 +7,6 @@ import {
     DialogTitle
 } from '@material-ui/core';
 
-
 import '../../App.css'
 
 function mapStateToProps(store) {
