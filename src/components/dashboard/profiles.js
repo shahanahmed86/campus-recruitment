@@ -77,7 +77,7 @@ class Profiles extends Component {
                                                 <Typography
                                                     color='textPrimary'
                                                     paragraph={true}
-                                                    children={val.turnover}
+                                                    children={val.turnover.toLocaleString()}
                                                 />
                                             </td>
                                         </tr>
