@@ -3,8 +3,8 @@
 body {
   font-family: Verdana, Tahoma, sans-serif;
   overflow-y: scroll;
-  background: url('./images/back.jpg') no-repeat fixed;
-  background-size: cover;
+  background: url('./images/back.jpg') fixed;
+  /* background-size: cover; */
 }
 
 .container {

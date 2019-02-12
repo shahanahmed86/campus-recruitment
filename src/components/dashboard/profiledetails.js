@@ -150,8 +150,8 @@ class ProfileDetail extends React.Component {
                             </tr>
                             <tr>
                                 <th scope='row'>Turnover</th>
-                                <td>{details.turnover.toLocaleString()}</td>
-                                <td>{details.updatedProfile.turnover.toLocaleString()}</td>
+                                <td>{Number(details.turnover).toLocaleString()}</td>
+                                <td>{Number(details.updatedProfile.turnover).toLocaleString()}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -181,7 +181,7 @@ class ProfileDetail extends React.Component {
                             </tr>
                             <tr>
                                 <th scope='row'>Turnover</th>
-                                <td>{details.turnover.toLocaleString()}</td>
+                                <td>{Number(details.turnover).toLocaleString()}</td>
                             </tr>
                         </tbody>
                     </table>
