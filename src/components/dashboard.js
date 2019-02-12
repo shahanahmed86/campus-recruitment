@@ -61,7 +61,7 @@ class Dashboard extends Component {
                 this.selection(this.state.selectedTab);
                 this.props.renderCondition(false);
             } else {
-                this.props.history.push('/login');
+                this.props.history.replace('/login');
             }
         });
     }
@@ -98,7 +98,7 @@ class Dashboard extends Component {
         auth().signOut()
         this.props.clearReduxState();
         this.props.changeSignUp(false);
-        this.props.history.push('/login');
+        this.props.history.replace('/login');
     }
 
     selectTab = selectedTab => {
@@ -109,15 +109,15 @@ class Dashboard extends Component {
     selection = val => {
         switch (val) {
             case 0: {
-                this.props.history.push('/dashboard/profile');
+                this.props.history.replace('/dashboard/profile');
                 break;
             }
             case 1: {
-                this.props.history.push('/dashboard/allprofiles');
+                this.props.history.replace('/dashboard/allprofiles');
                 break;
             }
             default: {
-                this.props.history.push('/dashboard/profile');
+                this.props.history.replace('/dashboard/profile');
                 break;
             }
         }

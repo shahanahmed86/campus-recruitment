@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 
 class EnterThePage extends Component {
     gotoIndex = () => {
-        this.props.history.push('/login');
+        this.props.history.replace('/login');
     }
     render() {
         return (

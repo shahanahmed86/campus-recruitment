@@ -106,7 +106,7 @@ class CompanyLogin extends Component {
 
     onChangeLoginState = () => {
         this.props.changeSignUp(!this.props.store.isSignUp);
-        this.props.history.push('/login');
+        this.props.history.replace('/login');
     }
 
     render() {

@@ -54,13 +54,13 @@ class LoginPage extends Component {
         this.props.renderCondition(true);
         auth().onAuthStateChanged(user => {
             if (user) {
-                this.props.history.push('/dashboard')
+                this.props.history.replace('/dashboard')
             } else {
                 if (this.props.store.isSignUp) {
                     this.selection(this.state.selectedTab);
-                    this.props.history.push('/login/student');
+                    this.props.history.replace('/login/student');
                 } else {
-                    this.props.history.push('/login');
+                    this.props.history.replace('/login');
                 }
                 this.props.renderCondition(false);
             }
@@ -75,11 +75,11 @@ class LoginPage extends Component {
     selection = val => {
         switch (val) {
             case 0: {
-                this.props.history.push('/login/student');
+                this.props.history.replace('/login/student');
                 break;
             }
             case 1: {
-                this.props.history.push('/login/company');
+                this.props.history.replace('/login/company');
                 break;
             }
             default: {

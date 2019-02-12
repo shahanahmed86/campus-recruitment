@@ -9,7 +9,7 @@ node_modules
 /coverage
 
 # firebase
-/.firebase
+.firebase
 .firebaserc
 firebase.json
 
