@@ -7,9 +7,9 @@ body {
 }
 
 .container {
-  width: 95%;
+  width: 95% !important;
   margin: auto;
-  overflow-x: auto;
+  overflow: auto;
   opacity: 0.85;
 }
 
@@ -107,4 +107,10 @@ body {
 .highlight {
   color: red;
   background-color: yellow;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: initial !important;
+  }
 }

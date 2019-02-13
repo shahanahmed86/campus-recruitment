@@ -12,6 +12,7 @@ import actions from '../store/actions'
 import StudentLogin from './login/student';
 import CompanyLogin from './login/company';
 import HeaderText from './headertext';
+import PositionedSnackbar from '../containers/snackbar';
 
 import './config';
 import '../App.css';
@@ -100,25 +101,31 @@ class LoginPage extends Component {
         let { email, password } = this.state;
         auth().signInWithEmailAndPassword(email, password)
             .then(() => {
-                this.props.renderCondition(false);
+                this.setState({
+                    snackOpen: true,
+                    snackMessage: 'Login Successfully',
+                });
             })
             .catch(err => {
+                this.props.renderCondition(false);
                 this.setState({
                     snackOpen: true,
                     snackMessage: err.message,
-                    isLoading: false
                 });
             });
-    }
+        }
 
     onChangeLoginState = () => {
         this.selection(this.state.selectedTab);
-        console.log(this.props.store.isSignUp)
         this.props.changeSignUp(!this.props.store.isSignUp);
     }
 
+    handleClose = () => {
+        this.setState({ snackOpen: false });
+    };
+
     render() {
-        const { selectedTab, email, password } = this.state;
+        const { selectedTab, email, password, snackOpen, snackMessage } = this.state;
         const { isSignUp, isLoading } = this.props.store;
         if (isLoading) return (
             <div className='center-box'>
@@ -217,6 +224,11 @@ class LoginPage extends Component {
                         );
                     })}
                 </div>
+                <PositionedSnackbar
+                    open={snackOpen}
+                    message={snackMessage}
+                    close={this.handleClose}
+                />
             </div>
         );
     }
