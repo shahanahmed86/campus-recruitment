@@ -121,7 +121,7 @@ class OwnProfile extends Component {
                             variant='filled'
                         />
                         <TextField
-                            label="Computerized-National-Identity-Card (CNIC)"
+                            label="CNIC"
                             type='text'
                             name='cnic'
                             value={editRequest ? this.props.store.currentUser.updatedProfile.cnic : cnic}
@@ -217,7 +217,7 @@ class OwnProfile extends Component {
                             variant='filled'
                         />
                         <TextField
-                            label="Computerized-National-Identity-Card (CNIC)"
+                            label="CNIC"
                             type='text'
                             name='cnic'
                             value={editRequest ? this.props.store.currentUser.updatedProfile.cnic : cnic}

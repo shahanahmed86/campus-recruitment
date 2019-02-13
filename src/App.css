@@ -4,7 +4,6 @@ body {
   font-family: Verdana, Tahoma, sans-serif;
   overflow-y: scroll;
   background: url('./images/back.jpg') fixed;
-  /* background-size: cover; */
 }
 
 .container {
@@ -103,4 +102,9 @@ body {
 .name-styling:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.highlight {
+  color: red;
+  background-color: yellow;
 }
