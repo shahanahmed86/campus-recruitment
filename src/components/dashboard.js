@@ -52,7 +52,7 @@ class Dashboard extends Component {
             selectedTab: 0,
         }
     }
-    
+
     componentDidMount() {
         this.props.renderCondition(true);
         auth().onAuthStateChanged(user => {
@@ -167,34 +167,38 @@ class Dashboard extends Component {
                             </div>
                         </AppBar>
                         <div className='tab-styling'>
-                            <AppBar position='relative'>
-                                <Tabs
-                                    value={selectedTab}
-                                    variant='fullWidth'
-                                    centered
-                                >
-                                    <Tab
-                                        label={currentUser.category}
-                                        onClick={() => this.selectTab(0)}
-                                    />
-                                    <Tab
-                                        label={this.getLabel()}
-                                        onClick={() => this.selectTab(1)}
-                                    />
-                                </Tabs>
-                            </AppBar>
+                            <div>
+                                <AppBar position='relative'>
+                                    <Tabs
+                                        value={selectedTab}
+                                        variant='fullWidth'
+                                        centered
+                                    >
+                                        <Tab
+                                            label={currentUser.category}
+                                            onClick={() => this.selectTab(0)}
+                                        />
+                                        <Tab
+                                            label={this.getLabel()}
+                                            onClick={() => this.selectTab(1)}
+                                        />
+                                    </Tabs>
+                                </AppBar>
+                            </div>
                         </div>
-                        <div>
-                            {routes.map((val, ind) => {
-                                return (
-                                    <Route
-                                        key={ind}
-                                        path={val.path}
-                                        exact={val.exact}
-                                        component={val.main}
-                                    />
-                                );
-                            })}
+                        <div className='routes-result'>
+                            <div>
+                                {routes.map((val, ind) => {
+                                    return (
+                                        <Route
+                                            key={ind}
+                                            path={val.path}
+                                            exact={val.exact}
+                                            component={val.main}
+                                        />
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 )}

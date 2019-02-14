@@ -80,8 +80,16 @@ body {
 }
 
 .tab-styling {
-  max-width: fit-content;
   margin-top: 12px;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.routes-result {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .dashboard-paper-width {
